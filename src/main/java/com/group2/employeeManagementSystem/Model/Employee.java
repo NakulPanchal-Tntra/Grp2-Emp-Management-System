@@ -1,42 +1,47 @@
 package com.group2.employeeManagementSystem.Model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-//import jakarta.validation.constraints.Email;
 
 @Entity
-@Table(name = "employeeDB")
+@Table(name = "employees",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_email", columnNames = "email")
+        })
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Size(min = 2, max = 50, message = "The characters must be between 2 to 50")
-    @NotNull(message = "The name must not null")
-    @NotBlank(message = "The name must not blank")
+    @NotNull(message = "Name must not be null")
+    @NotBlank(message = "Name must not be blank")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
-    @Email
-    @NotNull(message = "The email must not null")
-    @NotBlank(message = "The email must not blank")
+    @Email(message = "Email should be valid")
+    @NotNull(message = "Email must not be null")
+    @NotBlank(message = "Email must not be blank")
     private String email;
 
-    @Size(min = 2, max = 50, message = "The characters must be between 2 to 50")
-    @NotNull(message = "The designation must not null")
-    @NotBlank(message = "The designation must not blank")
+    @NotNull(message = "Designation must not be null")
+    @NotBlank(message = "Designation must not be blank")
+    @Size(min = 2, max = 50, message = "Designation must be between 2 and 50 characters")
     private String designation;
 
-    @Size(min = 2, max = 50, message = "The characters must be between 2 to 50")
-    @NotNull(message = "The department must not null")
-    @NotBlank(message = "The department must not blank")
+    @NotNull(message = "Department must not be null")
+    @NotBlank(message = "Department must not be blank")
+    @Size(min = 2, max = 50, message = "Department must be between 2 and 50 characters")
     private String department;
 
-    @NotNull(message = "The salary must not null")
-    @NotBlank(message = "The salary must not blank")
-    private int salary;
+    @NotNull(message = "Salary must not be null")
+    @Min(value = 1000, message = "Salary must be at least 1000")
+    private Integer salary;
 
+    // ✅ Optional soft-delete flag for DELETE endpoint
+    private boolean active = true;
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -77,11 +82,32 @@ public class Employee {
         this.department = department;
     }
 
-    public int getSalary() {
+    public Integer getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(Integer salary) {
         this.salary = salary;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", designation='" + designation + '\'' +
+                ", department='" + department + '\'' +
+                ", salary=" + salary +
+                ", active=" + active +
+                '}';
     }
 }

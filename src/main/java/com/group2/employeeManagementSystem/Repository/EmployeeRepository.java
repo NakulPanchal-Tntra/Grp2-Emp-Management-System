@@ -1,4 +1,7 @@
 package com.group2.employeeManagementSystem.Repository;
 
-public interface EmployeeRepository {
+import com.group2.employeeManagementSystem.Model.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 }
