@@ -19,6 +19,16 @@ public class EmployeeController {
         return employees.size() + " employees created successfully.";
     }
 
+    @GetMapping("/getAll")
+    public String getAllEmployee(){
+        return "list of employee";
+    }
+
+    @GetMapping("/getEmp/{id}")
+    public String getEmployeeByID(@PathVariable int id){
+        return "details of employee" + id;
+    }
+
     @DeleteMapping("/deleteEmp/{id}")
     public String deleteEmployee(@PathVariable int id){
         return "Employee deleted successfully" + id;
