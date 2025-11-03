@@ -19,9 +19,6 @@ public class Employee {
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
-    @Email(message = "Email should be valid")
-    @NotNull(message = "Email must not be null")
-    @NotBlank(message = "Email must not be blank")
     private String email;
 
     @NotNull(message = "Designation must not be null")
@@ -38,7 +35,6 @@ public class Employee {
     @Min(value = 1000, message = "Salary must be at least 1000")
     private Integer salary;
 
-    // ✅ Optional soft-delete flag for DELETE endpoint
     private boolean active = true;
 
     // Getters and Setters
@@ -111,3 +107,4 @@ public class Employee {
                 '}';
     }
 }
+

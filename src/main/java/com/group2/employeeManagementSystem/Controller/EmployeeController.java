@@ -1,36 +1,40 @@
 package com.group2.employeeManagementSystem.Controller;
 
 import com.group2.employeeManagementSystem.Model.Employee;
+import com.group2.employeeManagementSystem.Service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @PostMapping("/employees")
-    public String createEmployee(@RequestBody Employee employee) {
-        return "Employee created successfully: " + employee.getName();
+    public Map<String, Object> createEmployee(@RequestBody Employee employee) {
+        Employee savedEmployee = employeeService.createEmployee(employee);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Employee created successfully and email has been added.");
+        response.put("employee", savedEmployee);
+
+        return response;
     }
 
     @PostMapping("/employees/bulk")
-    public String createMultipleEmployees(@RequestBody List<Employee> employees) {
-        return employees.size() + " employees created successfully.";
-    }
+    public Map<String, Object> createMultipleEmployees(@RequestBody List<Employee> employees) {
+        List<Employee> savedEmployees = employees.stream()
+                .map(employeeService::createEmployee)
+                .toList();
 
-    @GetMapping("/getAll")
-    public String getAllEmployee(){
-        return "list of employee";
-    }
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", savedEmployees.size() + " employees created successfully and emails have been added.");
+        response.put("employees", savedEmployees);
 
-    @GetMapping("/getEmp/{id}")
-    public String getEmployeeByID(@PathVariable int id){
-        return "details of employee" + id;
-    }
-
-    @DeleteMapping("/deleteEmp/{id}")
-    public String deleteEmployee(@PathVariable int id){
-        return "Employee deleted successfully" + id;
+        return response;
     }
 }
