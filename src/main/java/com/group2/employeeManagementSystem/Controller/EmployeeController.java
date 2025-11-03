@@ -18,4 +18,9 @@ public class EmployeeController {
     public String createMultipleEmployees(@RequestBody List<Employee> employees) {
         return employees.size() + " employees created successfully.";
     }
+
+    @DeleteMapping("/deleteEmp/{id}")
+    public String deleteEmployee(@PathVariable int id){
+        return "Employee deleted successfully" + id;
+    }
 }
