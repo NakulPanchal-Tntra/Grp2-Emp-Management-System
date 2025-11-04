@@ -37,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployee(){
+    public List<Employee> getAllEmployee() {
         return employeeRepository.findAll();
     }
 
@@ -59,4 +59,32 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new RuntimeException("Employee not found with ID: " + id);
         }
     }
+
+    @Override
+    public String updateEmployee(Integer id, Employee employee) {
+        Optional<Employee> emp = employeeRepository.findById(id);
+
+        if (emp.isPresent()) {
+            Employee empData = emp.get();
+            if (!employee.getName().isEmpty()) {
+                empData.setName(employee.getName());
+            }
+            if (!employee.getDepartment().isEmpty()) {
+                empData.setName(employee.getDepartment());
+            }
+            if (!employee.getDepartment().isEmpty()) {
+                empData.setName(employee.getDepartment());
+            } if (!employee.getDesignation().isEmpty()) {
+                empData.setName(employee.getDesignation());
+            }
+            empData.setSalary(employee.getSalary());
+            employeeRepository.save(empData);
+            return "Employee with id:" + id + " updated";
+
+        } else {
+            throw new RuntimeException("Employee not found");
+        }
+    }
+
+
 }

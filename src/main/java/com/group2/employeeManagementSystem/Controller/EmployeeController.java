@@ -1,6 +1,5 @@
 package com.group2.employeeManagementSystem.Controller;
 
-import ch.qos.logback.core.joran.spi.EventPlayer;
 import com.group2.employeeManagementSystem.Model.Employee;
 import com.group2.employeeManagementSystem.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +40,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<Employee> getAllEmp(){
+    public List<Employee> getAllEmp() {
         return employeeService.getAllEmployee();
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmpByID(@PathVariable int id){
+    public Employee getEmpByID(@PathVariable int id) {
         return employeeService.getEmployeeByID(id);
     }
+
     @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable Integer id) {
         try {
@@ -58,5 +58,17 @@ public class EmployeeController {
             return e.getMessage();
         }
 
+    }
 
-}}
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateEmployee(@PathVariable Integer id, @RequestBody Employee employee)
+    {
+        try {
+            String msg= employeeService.updateEmployee(id, employee);
+            return ResponseEntity.ok(msg);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
