@@ -1,5 +1,6 @@
 package com.group2.employeeManagementSystem.Controller;
 
+import com.group2.employeeManagementSystem.Model.DepartmentStats;
 import com.group2.employeeManagementSystem.Model.Employee;
 import com.group2.employeeManagementSystem.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,57 @@ public class EmployeeController {
             throw new RuntimeException(e);
         }
 
+    }
+
+    // New endpoint: Get statistics for a specific department
+    @GetMapping("/departments/{departmentName}/stats")
+    public ResponseEntity<DepartmentStats> getDepartmentStatsByName(
+            @PathVariable String departmentName) {
+        DepartmentStats stats = employeeService.getDepartmentStatsByName(departmentName);
+        return ResponseEntity.ok(stats);
+    }
+
+    // New endpoint: Get employee count by department
+    @GetMapping("/departments/{departmentName}/count")
+    public ResponseEntity<Map<String, Object>> getEmployeeCountByDepartment(
+            @PathVariable String departmentName) {
+        long count = employeeService.getEmployeeCountByDepartment(departmentName);
+        Map<String, Object> response = new HashMap<>();
+        response.put("department", departmentName);
+        response.put("employeeCount", count);
+        return ResponseEntity.ok(response);
+    }
+
+    // New endpoint: Get total salary by department
+    @GetMapping("/departments/{departmentName}/total-salary")
+    public ResponseEntity<Map<String, Object>> getTotalSalaryByDepartment(
+            @PathVariable String departmentName) {
+        long totalSalary = employeeService.getTotalSalaryByDepartment(departmentName);
+        Map<String, Object> response = new HashMap<>();
+        response.put("department", departmentName);
+        response.put("totalSalary", totalSalary);
+        return ResponseEntity.ok(response);
+    }
+
+    // NEW ENDPOINT: Get all department statistics
+    @GetMapping("/departments/stats")
+    public ResponseEntity<List<DepartmentStats>> getAllDepartmentStatistics() {
+        List<DepartmentStats> stats = employeeService.getDepartmentStatistics();
+        return ResponseEntity.ok(stats);
+    }
+
+    // NEW ENDPOINT: Get total employee count across all departments
+    @GetMapping("/employees/total-count")
+    public ResponseEntity<Map<String, Object>> getTotalEmployeeCount() {
+        List<DepartmentStats> allStats = employeeService.getDepartmentStatistics();
+        long totalCount = allStats.stream()
+                .mapToLong(DepartmentStats::getEmployeeCount)
+                .sum();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalEmployees", totalCount);
+        response.put("departmentBreakdown", allStats);
+
+        return ResponseEntity.ok(response);
     }
 }
