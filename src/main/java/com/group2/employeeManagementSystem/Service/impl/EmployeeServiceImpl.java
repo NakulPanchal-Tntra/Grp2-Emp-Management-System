@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -43,5 +44,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeByID(int id) {
         return employeeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteEmployee(Integer id) {
+        Optional<Employee> employeeOptional = employeeRepository.findById(id);
+
+        if (employeeOptional.isPresent()) {
+            Employee employee = employeeOptional.get();
+            boolean activeStatus = employee.isActive();
+            employee.setActive(!activeStatus); // mark inactive instead of delete
+            employeeRepository.save(employee);
+        } else {
+            throw new RuntimeException("Employee not found with ID: " + id);
+        }
     }
 }

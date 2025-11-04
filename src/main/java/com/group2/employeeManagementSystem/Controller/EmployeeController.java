@@ -49,6 +49,14 @@ public class EmployeeController {
     public Employee getEmpByID(@PathVariable int id){
         return employeeService.getEmployeeByID(id);
     }
+    @DeleteMapping("/{id}")
+    public String deleteEmployee(@PathVariable Integer id) {
+        try {
+            employeeService.deleteEmployee(id);
+            return "Employee with ID " + id + " has been deleted successfully.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
 
 
-}
+}}
