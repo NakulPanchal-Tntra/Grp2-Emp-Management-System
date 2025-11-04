@@ -7,6 +7,8 @@ import com.group2.employeeManagementSystem.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -31,5 +33,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setEmail(generatedEmail);
 
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<Employee> getAllEmployee(){
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getEmployeeByID(int id) {
+        return employeeRepository.findById(id).orElse(null);
     }
 }

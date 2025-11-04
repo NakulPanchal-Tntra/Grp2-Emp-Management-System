@@ -1,8 +1,10 @@
 package com.group2.employeeManagementSystem.Controller;
 
+import ch.qos.logback.core.joran.spi.EventPlayer;
 import com.group2.employeeManagementSystem.Model.Employee;
 import com.group2.employeeManagementSystem.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -37,4 +39,16 @@ public class EmployeeController {
 
         return response;
     }
+
+    @GetMapping("/employees")
+    public List<Employee> getAllEmp(){
+        return employeeService.getAllEmployee();
+    }
+
+    @GetMapping("/employees/{id}")
+    public Employee getEmpByID(@PathVariable int id){
+        return employeeService.getEmployeeByID(id);
+    }
+
+
 }
