@@ -22,6 +22,7 @@ public class DepartmentStats {
     }
 
     @Override
+
     public String toString() {
         return "DepartmentStats{" +
                 "departmentName='" + departmentName + '\'' +

@@ -105,12 +105,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                     empData.setName(employee.getName());
                 }
                 if (!employee.getDepartment().isEmpty()) {
-                    empData.setName(employee.getDepartment());
-                }
-                if (!employee.getDepartment().isEmpty()) {
-                    empData.setName(employee.getDepartment());
+                    empData.setDepartment(employee.getDepartment());
                 } if (!employee.getDesignation().isEmpty()) {
-                    empData.setName(employee.getDesignation());
+                    empData.setDesignation(employee.getDesignation());
                 }
                 empData.setSalary(employee.getSalary());
                 employeeRepository.save(empData);

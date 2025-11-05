@@ -61,10 +61,9 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateEmployee(@PathVariable Integer id, @RequestBody Employee employee)
-    {
+    public ResponseEntity<String> updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
         try {
-            String msg= employeeService.updateEmployee(id, employee);
+            String msg = employeeService.updateEmployee(id, employee);
             return ResponseEntity.ok(msg);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
@@ -120,8 +119,8 @@ public class EmployeeController {
     }
 
     @PutMapping("incr/{id}")
-    public ResponseEntity<Employee> incrementSalary(@PathVariable Integer id, @RequestBody Float percentage){
-        Employee emp = employeeService.incrementSalary(id,percentage);
+    public ResponseEntity<Employee> incrementSalary(@PathVariable Integer id, @RequestBody Float percentage) {
+        Employee emp = employeeService.incrementSalary(id, percentage);
         return ResponseEntity.ok(emp);
     }
 }
