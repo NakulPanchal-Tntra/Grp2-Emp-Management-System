@@ -12,7 +12,7 @@ public interface EmployeeService {
     Employee getEmployeeByID(int id);
     void deleteEmployee(Integer id);
     String updateEmployee(Integer id, Employee employee);
-
+    Employee incrementSalary(Integer id,Float percentage);
     // New methods for department statistics
     List<DepartmentStats> getDepartmentStatistics();
     DepartmentStats getDepartmentStatsByName(String departmentName);

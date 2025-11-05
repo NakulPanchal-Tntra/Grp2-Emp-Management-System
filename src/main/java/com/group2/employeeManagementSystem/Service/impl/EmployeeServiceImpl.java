@@ -103,6 +103,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             if (emp.isPresent()) {
                 Employee empData = emp.get();
+                if (!employee.getName().isEmpty()) {
+                    empData.setName(employee.getName());
+                }
+                if (!employee.getDepartment().isEmpty()) {
+                    empData.setName(employee.getDepartment());
+                }
+                if (!employee.getDepartment().isEmpty()) {
+                    empData.setName(employee.getDepartment());
+                } if (!employee.getDesignation().isEmpty()) {
+                    empData.setName(employee.getDesignation());
+                }
                 empData.setSalary(employee.getSalary());
                 employeeRepository.save(empData);
                 return "Employee with id:" + id + " updated";
@@ -114,6 +125,33 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException("Failed to update employee with ID " + id + ": " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Employee incrementSalary(Integer id, Float percentage) {
+        try {
+
+        Optional<Employee> emp = employeeRepository.findById(id);
+
+        if (emp.isPresent())
+        {
+            Employee empData = emp.get();
+            Integer salary= empData.getSalary();
+            salary += (int) (salary*(percentage/100));
+            empData.setSalary(salary);
+            return empData;
+        }
+        else {
+         throw new EmployeeNotFoundException("Employee not found with ID: "+ id);
+        }
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+        catch (Exception e)
+        {
+            throw e;
         }
     }
 

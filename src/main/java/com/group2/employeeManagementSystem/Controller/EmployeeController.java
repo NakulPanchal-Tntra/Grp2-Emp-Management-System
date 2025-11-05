@@ -124,4 +124,10 @@ public class EmployeeController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("incr/{id}")
+    public ResponseEntity<Employee> incrementSalary(@PathVariable Integer id, @RequestBody Float percentage){
+        Employee emp = employeeService.incrementSalary(id,percentage);
+        return ResponseEntity.ok(emp);
+    }
 }
