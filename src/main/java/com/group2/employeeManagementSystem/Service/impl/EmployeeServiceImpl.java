@@ -56,7 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployee() {
         try {
-            return employeeRepository.findAll();
+            // only active employees
+            return employeeRepository.findByActiveTrue();
         } catch (Exception e) {
             throw new RuntimeException("Failed to retrieve employees: " + e.getMessage(), e);
         }
@@ -65,14 +66,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeByID(int id) {
         try {
-            return employeeRepository.findById(id)
-                    .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with ID: " + id));
+            // only if active = true
+            return employeeRepository.findByIdAndActiveTrue(id)
+                    .orElseThrow(() -> new EmployeeNotFoundException("Active employee not found with ID: " + id));
         } catch (EmployeeNotFoundException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException("Failed to retrieve employee with ID " + id + ": " + e.getMessage(), e);
         }
     }
+
 
     @Override
     public void deleteEmployee(Integer id) {
