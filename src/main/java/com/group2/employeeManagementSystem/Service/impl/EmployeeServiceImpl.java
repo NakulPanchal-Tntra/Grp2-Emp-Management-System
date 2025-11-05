@@ -1,5 +1,4 @@
 package com.group2.employeeManagementSystem.Service.impl;
-
 import com.group2.employeeManagementSystem.Exception.DepartmentNotFoundException;
 import com.group2.employeeManagementSystem.Exception.DuplicateEmailException;
 import com.group2.employeeManagementSystem.Exception.EmployeeNotFoundException;
@@ -12,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -38,7 +37,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             String lastName = (parts.length > 1) ? parts[1].toLowerCase() : "";
             String generatedEmail = firstName + (lastName.isEmpty() ? "" : "." + lastName) + "@gmail.com";
 
-            // Check if email already exists
             if (employeeRepository.existsByEmail(generatedEmail)) {
                 throw new DuplicateEmailException("Email " + generatedEmail + " already exists in the system");
             }
@@ -149,14 +147,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
-        catch (Exception e)
-        {
-            throw e;
-        }
     }
-
-    // NEW METHODS FOR DEPARTMENT STATISTICS
-
     @Override
     public List<DepartmentStats> getDepartmentStatistics() {
         try {

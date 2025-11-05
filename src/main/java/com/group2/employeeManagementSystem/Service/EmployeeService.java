@@ -1,5 +1,4 @@
 package com.group2.employeeManagementSystem.Service;
-
 import com.group2.employeeManagementSystem.Model.DepartmentStats;
 import com.group2.employeeManagementSystem.Model.Employee;
 
@@ -13,7 +12,6 @@ public interface EmployeeService {
     void deleteEmployee(Integer id);
     String updateEmployee(Integer id, Employee employee);
     Employee incrementSalary(Integer id,Float percentage);
-    // New methods for department statistics
     List<DepartmentStats> getDepartmentStatistics();
     DepartmentStats getDepartmentStatsByName(String departmentName);
     long getEmployeeCountByDepartment(String departmentName);

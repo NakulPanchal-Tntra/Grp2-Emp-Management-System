@@ -1,14 +1,13 @@
 package com.group2.employeeManagementSystem.Controller;
-
 import com.group2.employeeManagementSystem.Model.DepartmentStats;
 import com.group2.employeeManagementSystem.Model.Employee;
 import com.group2.employeeManagementSystem.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
@@ -73,7 +72,6 @@ public class EmployeeController {
 
     }
 
-    // New endpoint: Get statistics for a specific department
     @GetMapping("/departments/{departmentName}/stats")
     public ResponseEntity<DepartmentStats> getDepartmentStatsByName(
             @PathVariable String departmentName) {
@@ -81,7 +79,6 @@ public class EmployeeController {
         return ResponseEntity.ok(stats);
     }
 
-    // New endpoint: Get employee count by department
     @GetMapping("/departments/{departmentName}/count")
     public ResponseEntity<Map<String, Object>> getEmployeeCountByDepartment(
             @PathVariable String departmentName) {
@@ -92,7 +89,6 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    // New endpoint: Get total salary by department
     @GetMapping("/departments/{departmentName}/total-salary")
     public ResponseEntity<Map<String, Object>> getTotalSalaryByDepartment(
             @PathVariable String departmentName) {
@@ -103,14 +99,12 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    // NEW ENDPOINT: Get all department statistics
     @GetMapping("/departments/stats")
     public ResponseEntity<List<DepartmentStats>> getAllDepartmentStatistics() {
         List<DepartmentStats> stats = employeeService.getDepartmentStatistics();
         return ResponseEntity.ok(stats);
     }
 
-    // NEW ENDPOINT: Get total employee count across all departments
     @GetMapping("/employees/total-count")
     public ResponseEntity<Map<String, Object>> getTotalEmployeeCount() {
         List<DepartmentStats> allStats = employeeService.getDepartmentStatistics();

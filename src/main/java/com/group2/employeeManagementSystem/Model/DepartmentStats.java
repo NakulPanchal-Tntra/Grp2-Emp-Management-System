@@ -1,5 +1,10 @@
 package com.group2.employeeManagementSystem.Model;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
+@SuppressWarnings("unused")
 public class DepartmentStats {
     private String departmentName;
     private long employeeCount;
@@ -14,39 +19,6 @@ public class DepartmentStats {
         this.employeeCount = employeeCount;
         this.totalSalary = totalSalary;
         this.averageSalary = employeeCount > 0 ? (double) totalSalary / employeeCount : 0;
-    }
-
-    // Getters and Setters
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
-    public long getEmployeeCount() {
-        return employeeCount;
-    }
-
-    public void setEmployeeCount(long employeeCount) {
-        this.employeeCount = employeeCount;
-    }
-
-    public long getTotalSalary() {
-        return totalSalary;
-    }
-
-    public void setTotalSalary(long totalSalary) {
-        this.totalSalary = totalSalary;
-    }
-
-    public double getAverageSalary() {
-        return averageSalary;
-    }
-
-    public void setAverageSalary(double averageSalary) {
-        this.averageSalary = averageSalary;
     }
 
     @Override
